@@ -1,3 +1,6 @@
+This project is a task tracker made by React,which I create for learning React on Traversy Media Youtube channel
+
+This is just the front end without any backend or database
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
