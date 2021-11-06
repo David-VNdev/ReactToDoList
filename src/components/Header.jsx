@@ -1,5 +1,3 @@
-import { ReactPropTypes } from "react";
-import { useState } from "react";
 import Button from "./Button";
 
 const Header = ({ title, showAddTaskForm, toggleAddTaskForm }) => {
@@ -17,7 +15,7 @@ const Header = ({ title, showAddTaskForm, toggleAddTaskForm }) => {
 };
 
 Header.defaultProps = {
-	title: "Default Title",
+	title: "David ToDo List",
 };
 
 export default Header;

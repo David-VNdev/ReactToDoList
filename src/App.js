@@ -5,11 +5,7 @@ import React, { useState } from "react";
 
 function App() {
   const [showAddTaskForm, setShowAddTaskForm] = useState(true);
-	const [tasks, setTasks] = useState([
-		{ id: 1, text: "Study HTML", day: "5/10/2021", reminder: true },
-		{ id: 2, text: "Study CSS", day: "6/11/2021", reminder: true },
-		{ id: 3, text: "Study JS", day: "7/13/2021", reminder: true },
-	]);
+	const [tasks, setTasks] = useState([]);
   
 	const canToggleReminder = id => {
 		setTasks(
