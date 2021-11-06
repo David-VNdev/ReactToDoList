@@ -1,19 +1,23 @@
-import { ReactPropTypes } from "react"
-import  { useState } from "react";
-import Button from "./Button"
+import { ReactPropTypes } from "react";
+import { useState } from "react";
+import Button from "./Button";
 
-const Header = ({title}) => {
-    return (
-        <header className='header'>
-            <h1>{title}</h1>
-            <Button color ='#006400' text='Add Task' />
-        </header>
-    )
-}
+const Header = ({ title, showAddTaskForm, toggleAddTaskForm }) => {
+	return (
+		<header className="header">
+			<h1>{title}</h1>
+
+			<Button
+				color={showAddTaskForm ? "red" : "#006400"}
+				text={showAddTaskForm ? "Hide Add Task" : "Show Add Task"}
+				onClick={toggleAddTaskForm}
+			/>
+		</header>
+	);
+};
 
 Header.defaultProps = {
-    title: 'Default Title',
-}
+	title: "Default Title",
+};
 
-export default Header
-
+export default Header;

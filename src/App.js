@@ -4,6 +4,7 @@ import  AddTaskForm  from "./components/AddTaskForm";
 import React, { useState } from "react";
 
 function App() {
+  const [showAddTaskForm, setShowAddTaskForm] = useState(true);
 	const [tasks, setTasks] = useState([
 		{ id: 1, text: "Study HTML", day: "5/10/2021", reminder: true },
 		{ id: 2, text: "Study CSS", day: "6/11/2021", reminder: true },
@@ -18,13 +19,14 @@ function App() {
 
 	const canDeleteTask = id => {
 		setTasks(tasks.filter(task => task.id !== id));
+    console.log(id)
 	};
   
   const canAddTask = task => setTasks([...tasks, task]);
 	return (
 		<div className="container">
-			<Header />
-      <AddTaskForm canAddTask={canAddTask}/>
+			<Header showAddTaskForm={showAddTaskForm} toggleAddTaskForm = {()=>{setShowAddTaskForm(!showAddTaskForm)}}/>
+      {showAddTaskForm && <AddTaskForm canAddTask={canAddTask}/>}
 			{tasks.length > 0 ? (
 				<Tasks
 					tasks={tasks}
