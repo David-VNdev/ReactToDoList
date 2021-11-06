@@ -1,28 +1,48 @@
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
-import  AddTaskForm  from "./components/AddTaskForm";
-import React, { useState } from "react";
+import AddTaskForm from "./components/AddTaskForm";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [showAddTaskForm, setShowAddTaskForm] = useState(true);
+	const [showAddTaskForm, setShowAddTaskForm] = useState(true);
 	const [tasks, setTasks] = useState([]);
-  
-	const canToggleReminder = id => {
+
+	useEffect(() => loadFromServer(), []);
+	const loadFromServer = () => {
+		fetch("http://localhost:8000/tasks")
+			.then((response) => response.json())
+			.then((data) => setTasks(data));
+	};
+	const canToggleReminder = (id) => {
 		setTasks(
-      tasks.map(task =>  task.id === id ? { ...task, reminder: !task.reminder } : task )
-    )
+			tasks.map((task) => (task.id === id ? { ...task, reminder: !task.reminder } : task))
+		);
 	};
 
-	const canDeleteTask = id => {
-		setTasks(tasks.filter(task => task.id !== id));
-    console.log(id)
+	const canDeleteTask = async (id) => {
+		console.log(id);
+		await fetch(`http://localhost:8000/tasks/${id}`, { method: "DELETE" });
+    loadFromServer();
 	};
-  
-  const canAddTask = task => setTasks([...tasks, task]);
+
+	const canAddTask = async (task) => {
+		await fetch("http://localhost:8000/tasks/", {
+			method: "POST",
+			body: JSON.stringify(task),
+			headers: { "Content-Type": "application/json" },
+		});
+
+    loadFromServer();
+	};
 	return (
 		<div className="container">
-			<Header showAddTaskForm={showAddTaskForm} toggleAddTaskForm = {()=>{setShowAddTaskForm(!showAddTaskForm)}}/>
-      {showAddTaskForm && <AddTaskForm canAddTask={canAddTask}/>}
+			<Header
+				showAddTaskForm={showAddTaskForm}
+				toggleAddTaskForm={() => {
+					setShowAddTaskForm(!showAddTaskForm);
+				}}
+			/>
+			{showAddTaskForm && <AddTaskForm canAddTask={canAddTask} />}
 			{tasks.length > 0 ? (
 				<Tasks
 					tasks={tasks}
