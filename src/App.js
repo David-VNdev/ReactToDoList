@@ -13,7 +13,18 @@ function App() {
 			.then((response) => response.json())
 			.then((data) => setTasks(data));
 	};
-	const canToggleReminder = (id) => {
+	const canToggleReminder = async(id) => {
+    const response = await fetch(`http://localhost:8000/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...tasks.find((task) => task.id === id),
+        reminder: !tasks.find((task) => task.id === id).reminder,
+      }),
+    });
+
 		setTasks(
 			tasks.map((task) => (task.id === id ? { ...task, reminder: !task.reminder } : task))
 		);
